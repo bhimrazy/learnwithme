@@ -1,7 +1,9 @@
 import Head from "next/head";
+import { useAuth } from "../lib/auth";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const auth = useAuth();
   return (
     <div className={styles.container}>
       <Head>
@@ -45,6 +47,14 @@ export default function Home() {
             </p>
           </a>
         </div>
+        {!auth?.user && (
+          <button onClick={(e) => auth.signInWithGithub()}>Sign In</button>
+        )}
+
+        <div>{auth?.user?.email}</div>
+        {auth?.user && (
+          <button onClick={(e) => auth.signOut()}>Sign Out</button>
+        )}
       </main>
 
       <footer className={styles.footer}>
